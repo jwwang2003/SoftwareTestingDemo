@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -55,6 +56,7 @@ public class MessageServiceImplTests {
         pageable = PageRequest.of(0, 10);
     }
 
+    @DisplayName("1.")
     // findById
     @Test
     void testFindById_Exist() { // normal case
@@ -66,6 +68,7 @@ public class MessageServiceImplTests {
 
     }
 
+    @DisplayName("2.")
     @Test
     public void testFindById_NonExist() { // return null for not found
         int nonExistingId = 9999;
@@ -74,9 +77,11 @@ public class MessageServiceImplTests {
         assertNull(test);
     }
 
+    @DisplayName("3.")
     @Test
     public void testFindById_Invalid() { // throw exception for invalid
         int invalidId = -1;
+
         when(messageDao.getOne(invalidId)).thenThrow(new IllegalArgumentException());
 
         assertThrows(IllegalArgumentException.class, () -> {
