@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -9,24 +9,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.util.MetaAnnotationUtils;
 import org.springframework.data.domain.Pageable;
 
 import com.demo.dao.MessageDao;
 import com.demo.entity.Message;
-import com.demo.service.impl.MessageServiceImpl;
 
 public class MessageServiceImplTests {
 

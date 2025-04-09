@@ -1,4 +1,4 @@
-package com.demo.venue;
+package com.demo.service;
 
 import com.demo.entity.Venue;
 import com.demo.dao.VenueDao;
@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class VenueServiceTest {
+class VenueServiceTests {
 
     @Mock
     private VenueDao venueDao;

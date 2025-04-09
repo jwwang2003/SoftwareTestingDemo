@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -13,14 +13,13 @@ import com.demo.dao.UserDao;
 import com.demo.entity.Message;
 import com.demo.entity.User;
 import com.demo.entity.vo.MessageVo;
-import com.demo.service.impl.MessageVoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class MessageVoServiceImplTest {
+public class MessageVoServiceImplTests {
 
     @Mock
     private MessageDao messageDao;

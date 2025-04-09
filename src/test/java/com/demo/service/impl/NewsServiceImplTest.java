@@ -4,25 +4,23 @@ import java.util.Collections;
 
 import com.demo.entity.News;
 import com.demo.dao.NewsDao;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 
-
-
-@RunWith(MockitoJUnitRunner.class)  // 让 Mockito 在测试类中生效
+@ExtendWith(MockitoExtension.class)  // Enable Mockito for JUnit 5
 public class NewsServiceImplTest {
 
     @Mock
@@ -33,7 +31,7 @@ public class NewsServiceImplTest {
 
     private News news;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         news = new News();
         news.setNewsID(1);
