@@ -29,9 +29,6 @@ public class UserController {
         return "login";
     }
 
-
-
-
     @PostMapping("/loginCheck.do")
     @ResponseBody
     public String login(String userID,String password, HttpServletRequest request) throws IOException {
@@ -109,8 +106,8 @@ public class UserController {
         return user.getPassword().equals(password);
     }
 
-    @GetMapping("/user_info")
-    public String user_info(Model model){
-        return "user_info";
-    }
+//    @GetMapping("/user_info")
+//    public String user_info(Model model){
+//        return "user_info";
+//    }
 }
