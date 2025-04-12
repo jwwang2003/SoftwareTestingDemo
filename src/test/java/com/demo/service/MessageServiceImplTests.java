@@ -44,7 +44,7 @@ public class MessageServiceImplTests {
     @BeforeEach
     void setUp() {
         // Initialize the mocks
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 
         defaultMessage = new Message();
         defaultMessage.setContent("Testing");
@@ -89,6 +89,7 @@ public class MessageServiceImplTests {
         });
     }
 
+    @DisplayName("4.")
     @Test
     public void testFindByUser_WithMessages() {
         String userID = "user1";
@@ -107,6 +108,7 @@ public class MessageServiceImplTests {
         assertEquals(defaultMessage.getMessageID(), resultPage.getContent().get(0).getMessageID(), "消息ID应匹配");
     }
 
+    @DisplayName("5.")
     @Test
     public void testFindByUser_NoMessages() { // return empty page, if user exist but no message
         String userID = "user2";
@@ -122,6 +124,7 @@ public class MessageServiceImplTests {
         assertEquals(0, resultPage.getTotalElements(), "消息总数应为0");
     }
 
+    @DisplayName("6.")
     @Test
     public void testFindByUser_invalidUser() { // return null, if the user is invalid or not exist
         String userID = "invalidUser";
@@ -136,6 +139,7 @@ public class MessageServiceImplTests {
 
     }
 
+    @DisplayName("7.")
     @Test
     public void testCreate_ValidMessage() {
         // 模拟 DAO 保存并返回一个具有 messageID 的 Message 对象
@@ -145,6 +149,7 @@ public class MessageServiceImplTests {
         assertEquals(defaultMessage.getMessageID(), savedId, "保存后返回的 messageID 应该和期望一致");
     }
 
+    @DisplayName("8.")
     @Test
     public void testCreate_NullMessage() {
         // 如果业务期望 null 输入抛出异常，则验证异常行为
@@ -153,6 +158,7 @@ public class MessageServiceImplTests {
         });
     }
 
+    @DisplayName("9.")
     @Test
     public void testDelById_ValidId() {
         int validId = 1;
@@ -161,6 +167,7 @@ public class MessageServiceImplTests {
         verify(messageDao, times(1)).deleteById(validId);
     }
 
+    @DisplayName("10.")
     @Test
     public void testDelById_InvalidId() {
         int invalidId = 9999;
@@ -173,6 +180,7 @@ public class MessageServiceImplTests {
         });
     }
 
+    @DisplayName("11.")
     @Test
     public void testUpdate_ValidMessage() {
         // Since update returns void, we just call the method and then verify the
@@ -182,6 +190,7 @@ public class MessageServiceImplTests {
         verify(messageDao, times(1)).save(defaultMessage);
     }
 
+    @DisplayName("12.")
     @Test
     public void testUpdate_NullMessage() {
 
@@ -193,6 +202,7 @@ public class MessageServiceImplTests {
         });
     }
 
+    @DisplayName("13.")
     @Test
     public void testConfirmMessage_MessageExists() {
         when(messageDao.findByMessageID(1)).thenReturn(defaultMessage);
@@ -203,6 +213,7 @@ public class MessageServiceImplTests {
 
     }
 
+    @DisplayName("14.")
     @Test
     public void testConfirmMessage_MessageNotFound() {
         when(messageDao.findByMessageID(1)).thenReturn(null);
@@ -215,6 +226,7 @@ public class MessageServiceImplTests {
         verify(messageDao, never()).updateState(anyInt(), anyInt());
     }
 
+    @DisplayName("15.")
     @Test
     public void testRejectMessage_MessageExists() {
         when(messageDao.findByMessageID(defaultMessage.getMessageID())).thenReturn(defaultMessage);
@@ -224,6 +236,7 @@ public class MessageServiceImplTests {
         verify(messageDao, times(1)).updateState(3, defaultMessage.getMessageID());
     }
 
+    @DisplayName("16.")
     @Test
     public void testRejectMessage_MessageNotFound() {
         when(messageDao.findByMessageID(1)).thenReturn(null);
@@ -238,8 +251,9 @@ public class MessageServiceImplTests {
 
     // state 1: wait, 2: confirm , 3: reject
 
+    @DisplayName("17.")
     @Test
-    public void testFindWaitState() {
+    public void testFindWaitState_Normal() {
         Message message1 = new Message();
         message1.setMessageID(2);
         message1.setState(1);
@@ -258,6 +272,17 @@ public class MessageServiceImplTests {
         assertEquals(1, result.getContent().get(0).getState());
     }
 
+    @DisplayName("18.")
+    @Test
+    public void testFindWaitState_Error() {
+        when(messageDao.findAllByState(1, pageable)).thenThrow(new RuntimeException("Database error"));
+
+        assertThrows(RuntimeException.class, () -> {
+            messageService.findWaitState(pageable);
+        });
+    }
+
+    @DisplayName("19.")
     @Test
     public void testFindPassState() {
         Message message1 = new Message();
@@ -278,5 +303,15 @@ public class MessageServiceImplTests {
         assertNotNull(result);
         assertEquals(2, result.getTotalElements());
         assertEquals(2, result.getContent().get(0).getState());
+    }
+
+    @DisplayName("20.")
+    @Test
+    public void testFindPassState_Error() {
+        when(messageDao.findAllByState(2, pageable)).thenThrow(new RuntimeException("Database error"));
+
+        assertThrows(RuntimeException.class, () -> {
+            messageService.findPassState(pageable);
+        });
     }
 }

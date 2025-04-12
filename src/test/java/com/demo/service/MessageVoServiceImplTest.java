@@ -33,7 +33,7 @@ public class MessageVoServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
 
     private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2025, 4, 8, 10, 0);
