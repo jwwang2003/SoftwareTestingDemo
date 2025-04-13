@@ -13,6 +13,11 @@ File Encoding         : 65001
 Date: 2020-01-02 22:39:17
 */
 
+SET NAMES utf8mb4;
+SET character_set_connection = utf8mb4;
+SET character_set_client = utf8mb4;
+SET character_set_results = utf8mb4;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
