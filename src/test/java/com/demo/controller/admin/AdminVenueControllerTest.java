@@ -73,7 +73,7 @@ class AdminVenueControllerTest {
     public void testVenueManagePageWhenVenueListNotEmpty() throws Exception {
         List<Venue> venues = List.of(createTestVenue());
         when(venueService.findAll(DEFAULT_PAGEABLE)).thenReturn(new PageImpl<>(venues, DEFAULT_PAGEABLE, 1));
-        mockMvc.perform(get("admin/venue_manage"))
+        mockMvc.perform(get("/venue_manage"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("total"));
         verify(venueService).findAll(DEFAULT_PAGEABLE);
